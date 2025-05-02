@@ -27,47 +27,11 @@ const userSchema = new mongoose.Schema({
         type: Date,
         required: [true, 'Please provide your date of birth']
     },
-<<<<<<< HEAD
     gender: {
         type: String,
         enum: {
             values: ['Male', 'Female'],
             message: 'Gender is either: Male or Female. Got {VALUE}'
-=======
-    // employmentStatus:{
-    //     type:String,
-    //     required:[true, "Please provide your employment status"],
-    //     enum:{
-    //         values:['Employed', 'Self-Employed', 'Pensioner', 'Student', 'Unemployed'],
-    //          message:'Reason is either: Employed, Self-Employed, Pensioner, Student, Unemployed. Got {VALUE}'
-    //     }
-    // },
-
-    // reason:{
-    //     type:String,
-    //     required:[true, "Please provide reason for opening account"],
-    //     enum:{
-    //         values:['Income Earning', 'Hedging', 'Speculative'],
-    //          message:'Reason is either: Income Earning, Hedging or Speculative. Got {VALUE}'
-    //     }
-    // },
-    firstAddress:{
-        type:String,
-        required:[true, 'Please provide your first line of address']
-    },
-    // secondAddress:String,
-    // townCity:{
-    //     type:String,
-    //     required:[true, 'Please provide your town/city/region']
-    // },
-    photo:String,
-
-    role:{
-        type:String,
-        enum:{
-            values:['user', 'admin'],
-            message:'Role is either: admin or user. Got {VALUE}'
->>>>>>> d8d4da13632999076b2eb051217ca4ba4f24282d
         },
         required: true
     },
