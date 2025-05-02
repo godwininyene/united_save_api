@@ -1,0 +1,73 @@
+extends baseEmail
+
+block content
+  strong Hi #{firstName},
+  if type == 'deposit'
+    p
+      | You have successfully deposited 
+      b $#{amount}
+      |  to your account.
+    p Deposit waiting to be confirmed.
+
+  else if type == 'confirmed_deposit'
+    p
+      | Your deposit of 
+      b $#{amount}
+      |  has been confirmed.
+    p You can view your account balance by clicking the button below.
+    p
+      a(href=`${url}`, target='_blank') View Balance
+
+  else if type == 'unconfirmed_deposit'
+    p
+      | Your deposit of 
+      b $#{amount}
+      |  was not confirmed.
+    p You will receive an email explaining why your deposit was not confirmed.
+
+  else if type == 'withdrawal'
+    p
+      | You have successfully withdrawn 
+      b $#{amount}
+      |  from your account.
+    p Withdrawal waiting to be confirmed.
+
+  else if type == 'confirmed_withdraw'
+    p
+      | Your withdrawal of 
+      b $#{amount}
+      |  has been confirmed and coin has been paid into your provided wallet address. 
+     
+    p You can view your withdrawal transaction status by clicking the button below.
+    p
+      a(href=`${url}`, target='_blank') View Transaction
+
+  else if type == 'unconfirmed_withdraw'
+    p
+      | Your withdrawal of 
+      b $#{amount}
+      |  was not confirmed. Kindly check your main balance for reversal as the funds will be added to your account balance.
+    p You will receive an email explaining why your withdrawal was not confirmed.
+
+  else if type == 'transfer'
+    p
+      | You have successfully transferred 
+      b $#{678}
+      |  from 
+      b(style='text-transform: uppercase') #{data.from}
+      |  to 
+      b(style='text-transform: uppercase') #{data.to}.
+    p You can view your balance by clicking the button below.
+    p
+      a.f-fallback.button.button--yellow(href='https://trade-invest-ten.vercel.app/manage/investor/dashboard', target='_blank') View Transaction
+
+  else if type == 'commission'
+    p You have successfully received your referral commission.
+    p You can view your balance by clicking the button below.
+    p
+      a.f-fallback.button.button--yellow(href='https://trade-invest-ten.vercel.app/manage/investor/dashboard', target='_blank') View Balance
+  p
+  | Best Regards,
+  br
+  strong TradeInvest Support Team!
+
