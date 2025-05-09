@@ -87,14 +87,14 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please select account currency'],
         enum: ['$', '€', '£', 'RM', 'SGD$', '₹', 'Rp', 'AUD$', 'CAD$', '₣', '¥', '¥', 'ا.د', 'ك.د', 'MXN$', '.ع.ر', '₱', 'ق.ر', ' ﷼', '₩', '฿', '₫']
     },
-    passportPhoto: {
-        type: String,
-        required: [true, 'Please upload passport photograph']
-    },
-    identityDocument: {
-        type: String,
-        required: [true, 'Please upload identity document']
-    },
+    // passportPhoto: {
+    //     type: String,
+    //     required: [true, 'Please upload passport photograph']
+    // },
+    // identityDocument: {
+    //     type: String,
+    //     required: [true, 'Please upload identity document']
+    // },
     password: {
         type: String,
         required: [true, 'Please provide your password'],

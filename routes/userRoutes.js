@@ -14,8 +14,8 @@ const router = express.Router();
 
 router.post(
     '/signup',
-    uploadUserDocuments,
-    handleUploadErrors,
+    // uploadUserDocuments,
+    // handleUploadErrors,
     authController.signup
 );
 

@@ -43,8 +43,8 @@ exports.signup = catchAsync(async(req, res, next)=>{
     // 1) Process file uploads
     let passportPhoto;
     let identityDocument;
-    if(req.files?.passportPhoto)  passportPhoto  = `users/passports/${req.files.passportPhoto[0].filename}`;
-    if(req.files?.identityDocument)  identityDocument = `users/identities/${req.files.identityDocument[0].filename}`;
+    // if(req.files?.passportPhoto)  passportPhoto  = `users/passports/${req.files.passportPhoto[0].filename}`;
+    // if(req.files?.identityDocument)  identityDocument = `users/identities/${req.files.identityDocument[0].filename}`;
     // 2) Create new user
     const newUser = await User.create({
         fullname: req.body.fullname,
@@ -63,8 +63,8 @@ exports.signup = catchAsync(async(req, res, next)=>{
         nextKinRelationship: req.body.nextKinRelationship,
         nextKinAddress: req.body.nextKinAddress,
         currency: req.body.currency,
-        passportPhoto,
-        identityDocument,
+        // passportPhoto,
+        // identityDocument,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
         transactionPin: req.body.transactionPin,
