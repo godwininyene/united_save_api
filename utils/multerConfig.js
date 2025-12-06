@@ -1,9 +1,20 @@
 const multer = require('multer');
 const path = require('path');
 const stream = require('stream');
-const { v4: uuidv4 } = require('uuid');
 const AppError = require('./appError');
 const { cloudinary } = require('./cloudinary');
+
+// We'll create a function to get uuid since it's now ESM
+let uuidv4;
+
+// Initialize uuid dynamically
+const initializeUUID = async () => {
+    if (!uuidv4) {
+        const uuidModule = await import('uuid');
+        uuidv4 = uuidModule.v4;
+    }
+    return uuidv4;
+};
 
 // Create memory storage instead of disk storage
 const storage = multer.memoryStorage();
@@ -75,6 +86,9 @@ exports.handleUploadErrors = (err, req, res, next) => {
 // Function to upload buffer to Cloudinary
 const uploadToCloudinary = async (buffer, fieldname, originalname) => {
     try {
+        // Initialize uuid if needed
+        const getUuid = await initializeUUID();
+        
         // Determine folder and settings based on field name
         let folder;
         let transformation = [];
@@ -93,8 +107,8 @@ const uploadToCloudinary = async (buffer, fieldname, originalname) => {
             folder = 'users/misc';
         }
         
-        // Generate unique filename
-        const uniqueFilename = `${fieldname}-${uuidv4()}`;
+        // Generate unique filename using uuid
+        const uniqueFilename = `${fieldname}-${getUuid()}`;
         const ext = path.extname(originalname).toLowerCase();
         
         return new Promise((resolve, reject) => {
@@ -236,3 +250,19 @@ exports.extractPublicIdFromUrl = (url) => {
     const matches = url.match(/\/upload\/(?:v\d+\/)?(.+?)(?:\.[^/.]+)?$/);
     return matches ? matches[1] : null;
 };
+
+// Combined middleware for cleaner routes
+exports.uploadAndProcessUserDocuments = [
+    upload.fields([
+        { name: 'passportPhoto', maxCount: 1 },
+        { name: 'identityDocument', maxCount: 1 }
+    ]),
+    exports.handleUploadErrors,
+    exports.processUploadToCloudinary
+];
+
+exports.uploadAndProcessUserPhoto = [
+    upload.single('photo'),
+    exports.handleUploadErrors,
+    exports.processUploadToCloudinary
+];
