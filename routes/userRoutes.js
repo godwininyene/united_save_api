@@ -4,7 +4,13 @@ const userController = require('./../controllers/userController');
 const transactionRouter = require('./../routes/transactionRoutes');
 const loanRouter = require('./../routes/loanRoutes')
 const walletController = require('./../controllers/walletController');
-const { uploadUserDocuments, uploadUserPhoto, handleUploadErrors } = require('../utils/multerConfig');
+const {
+    uploadUserDocuments,
+    uploadUserPhoto,
+    handleUploadErrors,
+    processUploadToCloudinary,
+} = require('../utils/multerConfig');
+// const { uploadUserDocuments, uploadUserPhoto, handleUploadErrors } = require('../utils/multerConfig');
 
 const multer = require('multer')
 const upload = multer();
@@ -34,8 +40,14 @@ router.use('/me/loans', loanRouter)
 router.get('/me/wallet', walletController.getWallet)
 
 
-router.route('/updateMyPassword').patch( authController.updatePassword);
-router.route('/updateMe').patch(uploadUserPhoto, userController.updateMe);
+router.route('/updateMyPassword').patch(authController.updatePassword);
+router.route('/updateMe').patch(
+    uploadUserPhoto,
+    uploadUserPhoto,
+    handleUploadErrors,
+    processUploadToCloudinary,
+    userController.updateMe
+);
 router.route('/me').get(userController.getMe, userController.getUser);
 router.route('/deleteMe').delete(userController.deleteMe);
 
@@ -48,6 +60,6 @@ router.route('/').get(userController.getAllUsers);
 router.route('/:id').delete(userController.deleteUser)
 
 router.patch('/:id/status', userController.updateStatus)
-router.patch('/:id/wallets',upload.none(), walletController.fundWallet)
+router.patch('/:id/wallets', upload.none(), walletController.fundWallet)
 
 module.exports = router;

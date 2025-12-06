@@ -113,8 +113,7 @@ exports.createTransaction = catchAsync(async (req, res, next) => {
   // Create transaction
   const transaction = type === 'transfer'
     ? await Transaction.create(transactionData)
-    : await Deposit.create(transactionData);
-
+    : await Deposit.create(transactionData);  
   try {
     // Send email to user
     // await new Email(...).sendTransaction();
